@@ -1,0 +1,104 @@
+version: '2.2'
+
+services:
+  master1: &base
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}
+    container_name: master1
+    environment:
+      - node.name=master1
+      - node.master=true
+      - node.data=false
+    cpu_count: 2
+    mem_limit: 1gb
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./data/master1:/usr/share/elasticsearch/data
+      - ./config/master1:/usr/share/elasticsearch/config
+    ports:
+      - 9200:9200
+    networks:
+      - esnet
+
+  master2:
+    <<: *base
+    container_name: master2
+    environment:
+      - node.name=master2
+      - node.master=true
+      - node.data=false
+    volumes:
+      - ./data/master2:/usr/share/elasticsearch/data
+      - ./config/master2:/usr/share/elasticsearch/config
+    ports:
+      - 9201:9200
+
+  master3:
+    <<: *base
+    container_name: master3
+    environment:
+      - node.name=master3
+      - node.master=true
+      - node.data=false
+    volumes:
+      - ./data/master3:/usr/share/elasticsearch/data
+      - ./config/master3:/usr/share/elasticsearch/config
+    ports:
+      - 9202:9200
+
+  data1:
+    <<: *base
+    container_name: data1
+    environment:
+      - node.name=data1
+      - node.master=false
+      - node.data=true
+    volumes:
+      - ./data/data1:/usr/share/elasticsearch/data
+      - ./config/data1:/usr/share/elasticsearch/config
+    ports:
+      - 9203:9200
+
+  data2:
+    <<: *base
+    container_name: data2
+    environment:
+      - node.name=data2
+      - node.master=false
+      - node.data=true
+    volumes:
+      - ./data/data2:/usr/share/elasticsearch/data
+      - ./config/data2:/usr/share/elasticsearch/config
+    ports:
+      - 9204:9200
+
+  data3:
+    <<: *base
+    container_name: data3
+    environment:
+      - node.name=data3
+      - node.master=false
+      - node.data=true
+    volumes:
+      - ./data/data3:/usr/share/elasticsearch/data
+      - ./config/data3:/usr/share/elasticsearch/config
+    ports:
+      - 9205:9200
+
+  data4:
+    <<: *base
+    container_name: data4
+    environment:
+      - node.name=data4
+      - node.master=false
+      - node.data=true
+    volumes:
+      - ./data/data4:/usr/share/elasticsearch/data
+      - ./config/data4:/usr/share/elasticsearch/config
+    ports:
+      - 9206:9200
+
+networks:
+  esnet:
